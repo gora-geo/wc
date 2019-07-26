@@ -1,0 +1,533 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8" />
+    <title>Making your first Phaser 3 Game - Part 3</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.18.1/dist/phaser.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!--
+
+    <div id="bacgraund2">
+    <img src="sprites/2.jpg" alt="Письма мастера дзен"
+style="
+position: absolute;
+    z-index: 0;
+        opacity: 0.5; /* Полупрозрачность элемента */
+" 
+    >
+
+</div>
+-->
+<script type="text/javascript">
+
+  var config = {
+      /*
+    type: Phaser.AUTO,
+    backgroundColor: '#2dab2d',
+    scale: {
+        mode: Phaser.Scale.WIDTH_CONTROLS_HEIGHT,
+        _parent: 'phaser-example',
+        width: 768,
+        height: 1024
+    },
+    */
+      
+       type: Phaser.AUTO,
+    backgroundColor: '#2dab2d',
+    /*
+    scale: {
+        mode: Phaser.Scale.FIT,
+        parent: 'phaser-example',
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        width: 768,
+        height: 1024,
+        zoom: 2
+    },
+*/
+    
+      /* 
+   var config = {
+    type: Phaser.AUTO,
+       
+       */
+    width: 768,
+    height: 1024,
+    
+      
+   
+    
+   
+     physics: {
+        default: 'matter',
+        matter: {
+            gravity: {
+                x: 0,
+                y: 0
+            }
+        }
+    },
+    scene: {
+        preload: preload,
+        create: create,
+        update: update
+    }
+};
+var zlo0 = "null";
+var zlo1= "null";
+var zlo2 = "null";
+    var girl;
+var timedEvent;
+var platforms;
+    var strelka;
+    var t = 0;
+    var s = 0;
+    var c;
+    var q=0;
+    var p=1;
+
+    var game = new Phaser.Game(config);
+
+    function preload ()
+    {
+        /*загружаем данные в загрузчик */
+        this.load.image('backgraund', 'sprites/1_0000s_0005_bg.jpg');
+        this.load.image('girl', 'sprites/1_0000s_0001s_0000_Layer-981.png');
+        this.load.image('labal1', 'sprites/1_0000s_0002_Group-9.png');
+        this.load.image('krug', 'sprites/1.png');
+        this.load.image('krug2', 'sprites/1.png');
+        this.load.image('strelka', 'sprites/1_0000_arrowdown.png');
+        this.load.image('boy1', 'sprites/Untitled-1_0000_Garen1.png');
+        this.load.image('meh', 'sprites/Untitled-1_0001_Hand_L_3--copy.png');
+
+        this.load.image('boy2', 'sprites/Untitled-1_0000_garen2.png');
+        this.load.image('meh2', 'sprites/Untitled-1_0001_Layer-3.png');
+
+        this.load.image('zlobos', 'sprites/1_0000s_0003_Group-8-copy.png');
+
+        this.load.image('zlo0', 'sprites/1_0000s_0002s_0001_Layer-100.png');
+        this.load.image('zlo1', 'sprites/1_0000s_0002s_0000_Group-2.png');
+        this.load.image('zlo2', 'sprites/1_0000s_0002s_0002.png');
+        this.load.image('zvezda0', 'sprites/lightred.png');
+        this.load.image('zvezda1', 'sprites/lightred.png');
+        this.load.image('zvezda2', 'sprites/lightred.png');
+
+
+        
+        
+
+     
+    }
+
+    function create ()
+    {
+        
+        
+        /*создаем размешаем фон координаты указаны по центру но можно по верхенму левому --
+        this.add.image(0, 0, 'sky').setOrigin(0, 0)*/
+/*
+        platforms = this.physics.add.staticGroup();
+        platforms.create(0, 703, 'girl').setOrigin(0, 0);
+*/
+        this.add.image(0, 0, 'backgraund').setOrigin(0, 0);
+        /*
+        
+        var line = new Phaser.Geom.Line(100, 500, 700, 100);
+
+    var graphics = this.add.graphics({ lineStyle: { width: 4, color: 0xaa00aa } });
+
+    graphics.strokeLineShape(line);
+    */
+        krug =  this.add.image(-30, 731, 'krug').setOrigin(0, 0).setInteractive();
+         krug.alpha = 0;
+      girl= this.add.image(0, 703, 'girl').setOrigin(0, 0);
+        meh  =  this.add.image(240, 668, 'meh').setOrigin(0, 0);
+        boy = this.add.image(90, 740, 'boy1').setOrigin(0, 0);
+
+
+        
+        /*
+        girl.alpha = 0.5;
+        */
+        
+      label =  this.add.image(130, 469, 'labal1').setOrigin(0, 0);
+      
+        /*
+        var sprite = this.add.sprite(400, 300, 'eye').setInteractive();
+        */
+        /*
+        label.on('pointerdown', function (pointer) {
+
+        console.log("down");
+            document.location.replace("https://yandex.ru/");
+
+    });
+
+    label.on('pointerout', function (pointer) {
+
+        console.log("out");
+
+    });
+
+    label.on('pointerup', function (pointer) {
+
+        console.log("up");
+
+    });
+       */
+       strelka =  this.matter.add.image(320, 670, 'strelka').setOrigin(0, 0);
+       
+       krug2 = this.add.image(-30, 731, 'krug2').setOrigin(0, 0);
+
+   
+
+       krug.on('pointerdown', function (pointer) {
+
+        
+     
+
+console.log("p==",p);
+         
+meh.angle=meh.angle-15;
+meh.x=meh.x-45;
+setTimeout(function(){
+    console.log("down");
+meh.angle=meh.angle+15;
+meh.x=meh.x+45;
+    ;},100);/*создание врагачрез 5 сек*/
+
+  if (c==0){
+    ;
+    zvezda0.alpha = 1;
+          setTimeout(function(){
+            zlo0.destroy(true); 
+            zlo0 = 'null';
+            zvezda0.destroy(true); 
+            zvezda0 = 'null';
+ 
+   
+
+    ;},100);/*убить*/
+
+      
+setTimeout(function(){
+             q=1; 
+             p=p+1;
+            
+    ;},200);/*убить*/
+  
+   
+                   
+
+          
+        }
+        if (c==1){
+            
+           zvezda1.alpha = 1; 
+           setTimeout(function(){
+            zlo1.destroy(true); 
+            zlo1 = 'null';
+            zvezda1.destroy(true); 
+            zvezda1 = 'null';
+            
+
+
+   
+
+    ;},100);/*убить*/ 
+          
+          
+
+setTimeout(function(){
+             q=1; 
+             p=p+1;
+            
+    ;},200);/*убить*/
+       
+        }
+        if (c==2){
+           
+            zvezda2.alpha = 1;
+            setTimeout(function(){
+            zlo2.destroy(true); 
+            zlo2 = 'null';
+            zvezda2.destroy(true); 
+            zvezda2 = 'null';
+
+   
+
+    ;},100);/*убить*/ 
+            
+            
+            
+        }
+
+      
+
+
+
+  setTimeout(function(){
+             q=1; 
+             p=p+1;
+            
+    ;},200);/*убить*/      
+
+    });
+        
+        /*
+        
+        this.add.overlap(girl, strelka, collectStar, null, this);
+        */
+        /*
+        this.matter.world.on('collisionstart', function (event, girl, strelka) {
+
+       girl.gameObject.setTint(0xff0000);
+        strelka.gameObject.setTint(0x00ff00);
+        
+        
+
+    });
+    */
+
+timedEvent = this.time.delayedCall(2500, onEvent, [], this);
+        
+        /*
+        
+         this.input.on('pointerdown', function () {
+
+        var currentZoom = this.scale.zoom;
+
+        if (currentZoom < 6)
+        {
+            this.scale.setZoom(currentZoom + 1);
+        }
+
+    }, this);
+    */
+
+          
+    }
+    /*
+    
+    window.addEventListener('resize', function (event) {
+
+    game.scale.resize(window.innerWidth, window.innerHeight);
+
+}, false);
+*/
+
+    function update ()
+    {
+if (c==7){
+	zlobos.y=zlobos.y+10;
+}
+        if (p==6) {
+            p=p+1;
+            meh.destroy(true); 
+            meh = 'null';
+            boy.destroy(true); 
+            boy = 'null';
+
+            meh  =  this.add.image(240, 668, 'meh2').setOrigin(0, 0);
+            boy = this.add.image(90, 740, 'boy2').setOrigin(0, 0);
+            zlobos = this.add.image(90, -140, 'zlobos').setOrigin(0, 0);
+            c=7;
+            q=3;
+
+        }
+
+        if (q==1){
+         
+                      zlo(this);
+                      q=0;
+
+        
+        }
+        if (c==0){
+            zlo0.y=zlo0.y+10;
+            zvezda0.y=zvezda0.y+10;
+            /*console.log(zlo0.y);*/
+        }
+        if (c==1){
+            zlo1.y=zlo1.y+10;
+            zlo1.x=zlo1.x-5;
+            zvezda1.y=zvezda1.y+10;
+            zvezda1.x=zvezda1.x-5;
+            console.log(zlo1.y);
+            console.log(zlo1.x);
+        }
+        if (c==2){
+            zlo2.y=zlo2.y+10;
+            zlo2.x=zlo2.x-10;
+            zvezda2.y=zvezda2.y+10;
+            zvezda2.x=zvezda2.x-10;
+            console.log(zlo2.y);
+            console.log(zlo2.x);
+        }
+        if (strelka.y < 678 && s==0) {
+            strelka.y = strelka.y + 1;
+            s=0;
+            krug2.alpha = krug2.alpha-0.1;
+            }
+        if (strelka.y == 678 && s==0) {
+            strelka.y = strelka.y - 1;
+            s=1;
+            krug2.alpha = krug2.alpha+0.1;
+            
+            }
+        if (strelka.y > 668 && s==1) {
+            strelka.y = strelka.y - 1;
+            s=1
+            krug2.alpha = krug2.alpha+0.1;
+            }
+        if (strelka.y == 668 && s==1) {
+            strelka.y = strelka.y + 1;
+            s=0;
+            krug2.alpha = krug2.alpha-0.1;
+            }
+        
+        
+        /*
+        
+        if (t==0) {
+            girl.setOrigin(0, 0);
+girl.angle++;
+
+*/
+/*Для правого верхнего угла:*/
+/*
+girl.setOrigin(1, 0);
+girl.angle++;
+
+*/
+/*Для бота в правом углу:*/
+/*
+girl.setOrigin(1, 1);
+girl.angle++;
+*/
+/*Для левого угла бота:*/
+/*
+girl.setOrigin(0, 1);
+girl.angle++;
+*/
+        /*
+        }
+        */
+        /*
+         girl.x = girl.x +10;
+        */
+    /*
+        girl.alpha = girl.alpha-0.01;
+        */
+        /*
+         Phaser.Actions.RotateAround( girl, { x: 400, y: 300 }, 0.01);
+         */
+        
+        
+        
+        /*
+        console.log(girl.Alpha);
+       console.log(girl.globalAlpha);
+       console.log(girl.opacity);
+        Phaser.Actions.SetAlpha(girl, 0.5, 0.5);
+        girl.globalAlpha = 0.5;
+        girl.Alpha = 0.5;
+        girl.SetAlpha = 0.5;
+      
+            girl.frame.pivotY =10;
+        girl.frame.pivotX =10;
+        girl.frame.rotated = 100;
+        */
+    }
+
+    function onEvent ()
+{
+    s=3;
+    krug.alpha = 1;
+     krug2.alpha = 0;
+    strelka.destroy(true); 
+    strelka = 'null';
+    label.destroy(true); 
+    label = 'null';
+    
+    t=1;
+zlo(this);
+   /* girl.kill();*/
+   /*
+    function getRandomInRange(min, max) {   //случайное целое числопогуглил
+                           return Math.floor(Math.random() * (max - min + 1)) + min;
+                      }
+                      c = getRandomInRange(0, 2);
+                      if (c==0){
+                        zlo0 =  this.add.image(-45, -350, 'zlo0').setOrigin(0, 0);
+                        zvezda0 = this.add.image(-45, -350, 'zvezda0').setOrigin(0, 0);
+                        zvezda0.alpha = 0;
+                      }
+                      if (c==1){
+                        zlo1 =  this.add.image(345, -325, 'zlo1').setOrigin(0, 0);
+                        zvezda1 = this.add.image(345, -325, 'zvezda1').setOrigin(0, 0);
+                        zvezda1.alpha = 0;
+                      }
+                      if (c==2){
+                        zlo2 =  this.add.image(779, -23, 'zlo2').setOrigin(0, 0);
+                        zvezda2 = this.add.image(779, -23, 'zvezda2').setOrigin(0, 0);
+                        zvezda2.alpha = 0;
+
+                      }
+
+   
+    */
+    
+    
+     
+}
+    
+    function zlo(a) { 
+         
+        function getRandomInRange(min, max) {   //случайное целое числопогуглил
+                           return Math.floor(Math.random() * (max - min + 1)) + min;
+                      }
+
+                      c = getRandomInRange(0, 2);
+                      console.log(c);
+                      if (c==0){
+                        zlo0 =  a.add.image(-45, -350, 'zlo0').setOrigin(0, 0);
+                        zvezda0 = a.add.image(-45, -350, 'zvezda0').setOrigin(0, 0);
+                        zvezda0.alpha = 0;
+                      }
+                      if (c==1){
+                        zlo1 =  a.add.image(345, -325, 'zlo1').setOrigin(0, 0);
+                        zvezda1 = a.add.image(345, -325, 'zvezda1').setOrigin(0, 0);
+                        zvezda1.alpha = 0;
+                      }
+                      if (c==2){
+                        zlo2 =  a.add.image(779, -23, 'zlo2').setOrigin(0, 0);
+                        zvezda2 = a.add.image(779, -23, 'zvezda2').setOrigin(0, 0);
+                        zvezda2.alpha = 0;
+
+                      }
+                      
+   
+     
+    
+    }
+  
+   
+     
+    
+   
+
+       function onEvent2 ()
+{
+    
+}
+</script>
+
+</body>
+</html>
